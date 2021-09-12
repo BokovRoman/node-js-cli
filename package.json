@@ -20,5 +20,9 @@
   "homepage": "https://github.com/BokovRoman/node-js-cli#readme",
   "devDependencies": {
     "nodemon": "^2.0.12"
+  },
+  "dependencies": {
+    "commander": "^8.2.0",
+    "nanoid": "^3.1.25"
   }
 }

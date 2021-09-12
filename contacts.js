@@ -1,18 +1,84 @@
- * const contactsPath = ;
- */
+const fs = require("fs").promises;
+const path = require("path");
+const { nanoid } = require("nanoid");
+const getAllContacts = require("./getAllContacts");
 
-function listContacts() {
-  // ...твой код
-}
+const contactsPath = path.join(__dirname, "db/contacts.json");
 
-function getContactById(contactId) {
-  // ...твой код
-}
+const listContacts = async () => {
+  try {
+    const contacts = await getAllContacts(contactsPath);
+    console.table(contacts);
+  } catch (error) {
+    console.log(error);
+  }
+};
 
-function removeContact(contactId) {
-  // ...твой код
-}
 
-function addContact(name, email, phone) {
-  // ...твой код
-}
+const getContactById = async (contactId) => {
+    try {
+        const contacts = await getAllContacts(contactsPath);
+        const contact = contacts.find(
+            (contact) => contact.id === contactId
+        );
+        if (!contact) {
+        return null;
+        }
+
+    console.table(contact);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const removeContact = async (contactId) => {
+  try {
+    const contacts = await getAllContacts(contactsPath);
+    const idx = contacts.findIndex(
+      (contact) => contact.id ===contactId
+    );
+    if (idx === -1) {
+      return null;
+    }
+
+    contacts.splice(idx, 1);
+    await fs.writeFile(contactsPath, JSON.stringify(contacts));
+    console.log("Success remove");
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
+const addContact = async (name, email, phone) => {
+    const contacts = await getAllContacts(contactsPath);
+    const id = nanoid(5);
+    const newContact = { name, email, phone, id };
+    contacts.push(newContact);
+
+    try {
+        await fs.writeFile(contactsPath, JSON.stringify(contacts));
+         console.table(newContact);
+        } catch (error) {
+        console.log(error.message);
+    }
+};
+
+module.exports = {
+    listContacts,
+    getContactById,
+    addContact,
+    removeContact,
+};
+
+
+
+
+// fs.readFile("db/contacts.json", "utf-8")
+//     .then(data => console.log(data))
+//     .catch(error => console.log(error));
+ 
+// (async() => {
+//     const data = await fs.readFile("db/contacts.json", "utf-8");
+//     console.log(data);
+// })()
