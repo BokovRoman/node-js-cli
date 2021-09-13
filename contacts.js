@@ -19,7 +19,7 @@ const getContactById = async (contactId) => {
     try {
         const contacts = await getAllContacts(contactsPath);
         const contact = contacts.find(
-            (contact) => contact.id === contactId
+             (contact) => String(contact.id) === String(contactId)
         );
         if (!contact) {
         return null;
@@ -35,7 +35,7 @@ const removeContact = async (contactId) => {
   try {
     const contacts = await getAllContacts(contactsPath);
     const idx = contacts.findIndex(
-      (contact) => contact.id ===contactId
+      (contact) => String(contact.id) ===String(contactId)
     );
     if (idx === -1) {
       return null;
