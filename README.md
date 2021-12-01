@@ -1,5 +1,4 @@
 # node-js-cli
 
 Repo of HW-1 (node-js)
-
-https://monosnap.com/list/617517e58a2e602fae460d10
+https://fex.net/ru/s/3lnneba
